@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+  cnx-db:
+    image: openstax/cnx-db:latest
+    # For development usage, use something like the following
+    # build:
+    #   context: https://github.com/Connexions/cnx-db.git#master
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    ports:
+      - "15432:5432"
+  pgadmin:
+    image: dpage/pgadmin4
+    depends_on:
+      - cnx-db
+    env_file:
+      - env-pgadmin.env
+    ports:
+      - '5050:5050'
+
+volumes:
+  pg-data:
